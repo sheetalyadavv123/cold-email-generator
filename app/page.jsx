@@ -194,9 +194,26 @@ export default function Home() {
               <input className={styles.input} placeholder="Razorpay is India's leading payments gateway, recently launched Turbo UPI..." value={form.companyAbout} onChange={(e) => set("companyAbout", e.target.value)} />
             </div>
             <div className={`${styles.field} ${styles.full}`}>
-              <label className={styles.label}>Your Unique Value / Achievement</label>
-              <textarea className={styles.textarea} placeholder="Built a social media marketplace with 200+ users, shipped 3 full-stack projects..." value={form.uniqueValue} onChange={(e) => set("uniqueValue", e.target.value)} />
-            </div>
+              <label className={styles.label}>
+                    Your Unique Value / Achievement
+               <span style={{
+                    float: "right",
+                    fontSize: "10px",
+                    color: form.uniqueValue.length > 250 ? "#c4687a" : "#b89099",
+                    fontFamily: "DM Mono, monospace",
+                    fontWeight: "400"
+                   }}>
+                  {form.uniqueValue.length} / 300
+               </span>
+             </label>
+          <textarea
+            className={styles.textarea}
+            maxLength={300}
+            placeholder="Built a social media marketplace with 200+ users..."
+            value={form.uniqueValue}
+            onChange={(e) => set("uniqueValue", e.target.value)}
+             />
+             </div>
           </div>
         </div>
 
