@@ -93,18 +93,60 @@ export default function Home() {
 
   return (
     <div className={styles.app}>
+
+      {/* HEADER */}
       <header className={styles.header}>
-        <p className={styles.eyebrow}>✦ AI-Powered · Cold Outreach</p>
+        <p className={styles.eyebrow}>AI-Powered · Cold Outreach</p>
         <h1 className={styles.title}>
           Craft <em>emails</em><br />that open doors
         </h1>
         <p className={styles.sub}>
-          Enter a role and company. Get a personalized, compelling cold email in seconds.
+          Enter a role and company. Get a personalized, compelling cold email in seconds — powered by AI.
         </p>
+
+        {/* STATS */}
+        <div className={styles.statsRow}>
+          <div className={styles.statItem}>
+            <span className={styles.statNum}>10k+</span>
+            <span className={styles.statLabel}>Emails Generated</span>
+          </div>
+          <div className={styles.statDivider} />
+          <div className={styles.statItem}>
+            <span className={styles.statNum}>5</span>
+            <span className={styles.statLabel}>Tone Styles</span>
+          </div>
+          <div className={styles.statDivider} />
+          <div className={styles.statItem}>
+            <span className={styles.statNum}>98%</span>
+            <span className={styles.statLabel}>Satisfaction</span>
+          </div>
+        </div>
+
         <div className={styles.headerLine} />
       </header>
 
       <main className={styles.main}>
+
+        {/* TIPS CARD */}
+        <div className={styles.tipsCard}>
+          <div className={styles.tipItem}>
+            <div className={styles.tipIcon}>✍️</div>
+            <div className={styles.tipTitle}>Be Specific</div>
+            <div className={styles.tipText}>Mention a real project or achievement to stand out from generic applications</div>
+          </div>
+          <div className={styles.tipItem}>
+            <div className={styles.tipIcon}>🎯</div>
+            <div className={styles.tipTitle}>Know the Company</div>
+            <div className={styles.tipText}>Add something unique you know about them — a recent launch, news, or product</div>
+          </div>
+          <div className={styles.tipItem}>
+            <div className={styles.tipIcon}>💌</div>
+            <div className={styles.tipTitle}>Pick Your Tone</div>
+            <div className={styles.tipText}>Match your personality — bold for startups, professional for enterprise</div>
+          </div>
+        </div>
+
+        {/* INPUT CARD */}
         <div className={styles.card}>
           <div className={styles.cardLabel}>Your Details</div>
           <div className={styles.grid}>
@@ -126,15 +168,16 @@ export default function Home() {
             </div>
             <div className={`${styles.field} ${styles.full}`}>
               <label className={styles.label}>What you know about the company</label>
-              <input className={styles.input} placeholder="Razorpay is India's leading payments gateway..." value={form.companyAbout} onChange={(e) => set("companyAbout", e.target.value)} />
+              <input className={styles.input} placeholder="Razorpay is India's leading payments gateway, recently launched Turbo UPI..." value={form.companyAbout} onChange={(e) => set("companyAbout", e.target.value)} />
             </div>
             <div className={`${styles.field} ${styles.full}`}>
               <label className={styles.label}>Your Unique Value / Achievement</label>
-              <textarea className={styles.textarea} placeholder="Built a social media marketplace with 200+ users..." value={form.uniqueValue} onChange={(e) => set("uniqueValue", e.target.value)} />
+              <textarea className={styles.textarea} placeholder="Built a social media marketplace with 200+ users, shipped 3 full-stack projects..." value={form.uniqueValue} onChange={(e) => set("uniqueValue", e.target.value)} />
             </div>
           </div>
         </div>
 
+        {/* SETTINGS CARD */}
         <div className={styles.card}>
           <div className={styles.cardLabel}>Style Settings</div>
           <div className={styles.grid}>
@@ -154,15 +197,16 @@ export default function Home() {
             </div>
           </div>
           <button className={styles.btnGenerate} onClick={generate} disabled={loading}>
-            {loading ? <><span className={styles.spinner} /> Generating…</> : <>✦ &nbsp;Generate Cold Email</>}
+            {loading ? <><span className={styles.spinner} /> Crafting your email…</> : <>✦ &nbsp;Generate Cold Email</>}
           </button>
           {error && <div className={styles.error}>{error}</div>}
         </div>
 
+        {/* STREAMING */}
         {streaming && !result && (
           <div className={styles.outputCard}>
             <div className={styles.outputHeader}>
-              <span className={styles.outputLabel}>✦ Writing…</span>
+              <span className={styles.outputLabel}>Writing your email</span>
             </div>
             <div className={styles.outputBody}>
               <p className={styles.emailBody}>{streaming}<span className={styles.cursor} /></p>
@@ -170,13 +214,14 @@ export default function Home() {
           </div>
         )}
 
+        {/* RESULT */}
         {result && (
           <div className={styles.outputCard}>
             <div className={styles.outputHeader}>
-              <span className={styles.outputLabel}>✦ Your Cold Email</span>
+              <span className={styles.outputLabel}>Your Cold Email</span>
               <div className={styles.actions}>
-                <button className={`${styles.btnAction} ${copied ? styles.copied : ""}`} onClick={copy}>{copied ? "✓ Copied" : "Copy"}</button>
-                <button className={styles.btnAction} onClick={() => { setResult(null); setStreaming(""); }}>New</button>
+                <button className={`${styles.btnAction} ${copied ? styles.copied : ""}`} onClick={copy}>{copied ? "✓ Copied!" : "Copy Email"}</button>
+                <button className={styles.btnAction} onClick={() => { setResult(null); setStreaming(""); }}>New Email</button>
               </div>
             </div>
             <div className={styles.outputBody}>
@@ -194,6 +239,7 @@ export default function Home() {
           </div>
         )}
 
+        {/* HISTORY */}
         {history.length > 0 && (
           <div className={styles.card}>
             <div className={styles.cardLabel}>Recent Generations</div>
@@ -206,9 +252,13 @@ export default function Home() {
             </div>
           </div>
         )}
+
       </main>
 
-      <footer className={styles.footer}>crafted with gemini api · cold-email-generator v1.0</footer>
+      <footer className={styles.footer}>
+         cold-email-generator v1.0
+      </footer>
+
     </div>
   );
 }
