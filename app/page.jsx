@@ -121,7 +121,7 @@ export default function Home() {
       <div className={styles.topBar}>
         <div className={styles.logo}>
           <span className={styles.logoDot} />
-          mailcraft.ai
+          craftmail.ai
         </div>
       </div>
 

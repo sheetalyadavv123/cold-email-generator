@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Cold Email Generator — AI-Powered Outreach",
+  title: "CraftMail AI — Personalized Cold Emails in Seconds",
   description: "Generate personalized cold emails for job applications using AI.",
 };
 

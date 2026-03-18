@@ -2,11 +2,11 @@ export async function POST(req) {
   try {
     const body = await req.json();
 
-    const apiRes = await fetch(
-    process.env.NODE_ENV === "production"
-    ? "https://cold-email-api-production-3c0d.up.railway.app/api/generate-email"
-    : "http://localhost:3001/api/generate-email",
-    { 
+    const API_URL = process.env.NODE_ENV === "production"
+      ? process.env.NEXT_PUBLIC_API_URL
+      : "http://localhost:3001/api/generate-email";
+
+    const apiRes = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
