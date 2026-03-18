@@ -5,18 +5,41 @@ import styles from "./page.module.css";
 const TONES = ["Professional", "Friendly", "Bold", "Concise", "Creative"];
 const EMAIL_LENGTHS = ["Short (150 words)", "Medium (250 words)", "Long (350 words)"];
 
-function parseEmailOutput(raw) {
+function parseEmailOutput(raw, company, role) {
   const subjectMatch = raw.match(/subject[:\-\s]+(.+)/i);
   const subject = subjectMatch ? subjectMatch[1].trim() : null;
   const body = subject
     ? raw.replace(/subject[:\-\s]+.+\n?/i, "").trim()
     : raw.trim();
-  const scores = {
-    personalization: Math.floor(75 + Math.random() * 22),
-    clarity: Math.floor(78 + Math.random() * 20),
-    impact: Math.floor(72 + Math.random() * 24),
-  };
-  return { subject, body, scores };
+
+  const bodyLower = body.toLowerCase();
+  const wordCount = body.split(" ").length;
+  const paragraphs = body.split("\n\n").length;
+
+  const personalization = Math.min(100,
+    60 +
+    (company && bodyLower.includes(company.toLowerCase()) ? 15 : 0) +
+    (role && bodyLower.includes(role.toLowerCase()) ? 10 : 0) +
+    (bodyLower.includes("i noticed") || bodyLower.includes("i saw") || bodyLower.includes("i love") ? 10 : 0) +
+    (wordCount > 150 ? 5 : 0)
+  );
+
+  const clarity = Math.min(100,
+    65 +
+    (paragraphs >= 3 ? 15 : 5) +
+    (wordCount < 300 ? 15 : wordCount < 400 ? 8 : 3) +
+    (subject && subject.length < 60 ? 5 : 0)
+  );
+
+  const impact = Math.min(100,
+    60 +
+    (subject && subject.length > 10 ? 15 : 0) +
+    (body.includes("?") ? 10 : 0) +
+    (wordCount >= 100 ? 10 : 5) +
+    (bodyLower.includes("would love") || bodyLower.includes("excited") || bodyLower.includes("passionate") ? 5 : 0)
+  );
+
+  return { subject, body, scores: { personalization, clarity, impact } };
 }
 
 export default function Home() {
@@ -72,7 +95,7 @@ export default function Home() {
         }
       }
 
-      const parsed = parseEmailOutput(fullText);
+      const parsed = parseEmailOutput(fullText, form.company, form.targetRole);
       setResult(parsed); setStreaming("");
       setHistory((h) => [{ company: form.company, role: form.targetRole, result: parsed }, ...h.slice(0, 4)]);
     } catch (e) {
