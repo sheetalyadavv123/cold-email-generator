@@ -2,7 +2,7 @@ export async function POST(req) {
   try {
     const body = await req.json();
 
-    const apiRes = await fetch("http://localhost:5000/api/generate-email", {
+    const apiRes = await fetch("https://cold-email-api-production-3c0d.up.railway.app/api/generate-email", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
